@@ -1,45 +1,74 @@
 import React from "react";
 import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Icon from "../Elements/icon";
+import { NavLink } from "react-router-dom";
 
 function MainLayout(props) {
   const { children } = props;
 
+  const menu = [
+    { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
+    { id: 2, name: "Balances", icon: <Icon.Balance />, link: "/balance" },
+    { id: 3, name: "Transaction", icon: <Icon.Transaction />, link: "/transaction" },
+    { id: 4, name: "Bills", icon: <Icon.Bill />, link: "/bill" },
+    { id: 5, name: "Expenses", icon: <Icon.Expense />, link: "/expense" },
+    { id: 6, name: "Goals", icon: <Icon.Goal />, link: "/goal" },
+    { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
+  ];
+
   return (
-    <div className="flex min-h-screen">
-      <aside className="bg-defaultblack w-28 sm:w-64 text-special-bg2 flex flex-col justify-between px-5 sm:px-7 py-10">
+    <div className="flex min-h-screen h-screen overflow-hidden">
+      <aside className="bg-defaultblack w-28 sm:w-64 text-white flex flex-col justify-between px-5 sm:px-7 py-10">
         <div>
           <div className="mb-10">
             <Logo variant="secondary" />
           </div>
 
           <nav>
-            <div className="flex hover:bg-special-bg3 hover:text-white px-4 py-3 rounded-md text-sm">
-              <div className="mx-auto sm:mx-0">O</div>
-              <div className="ms-3 hidden sm:block">Overview</div>
-            </div>
+            {menu.map((item) => (
+              <NavLink
+                key={item.id}
+                to={item.link}
+                end={item.link === "/"}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? "#299D91" : "transparent",
+                })}
+                className={({ isActive }) =>
+                  `flex items-center w-full px-4 py-3 mb-1 rounded-md text-sm transition-all duration-200 ${
+                    isActive
+                      ? "text-white font-bold"
+                      : "text-white hover:bg-special-bg3 hover:font-bold"
+                  }`
+                }
+              >
+                <div className="mx-auto sm:mx-0 flex items-center">
+                  {item.icon}
+                </div>
 
-            <div className="flex hover:bg-special-bg3 hover:text-white px-4 py-3 rounded-md text-sm">
-              <div className="mx-auto sm:mx-0">B</div>
-              <div className="ms-3 hidden sm:block">Balances</div>
-            </div>
-
-            <div className="flex hover:bg-special-bg3 hover:text-white px-4 py-3 rounded-md text-sm">
-              <div className="mx-auto sm:mx-0">T</div>
-              <div className="ms-3 hidden sm:block">Transactions</div>
-            </div>
+                <div className="ms-3 hidden sm:block">
+                  {item.name}
+                </div>
+              </NavLink>
+            ))}
           </nav>
         </div>
 
         <div>
-          <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md text-sm">
-            <div className="mx-auto sm:mx-0">X</div>
-            <div className="ms-3 hidden sm:block">Logout</div>
+          <div className="flex items-center bg-special-bg3 text-white px-4 py-3 rounded-md text-sm">
+            <div className="mx-auto sm:mx-0 flex items-center">
+              <Icon.Logout />
+            </div>
+
+            <div className="ms-3 hidden sm:block">
+              Logout
+            </div>
           </div>
 
-          <div className="border-b my-8 border-special-bg2"></div>
+          <div className="border-b my-8 border-white"></div>
 
-          <div className="flex justify-between items-center text-sm">
+          <div className="flex justify-between items-center text-sm text-white">
             <div>Avatar</div>
 
             <div className="hidden sm:block text-center">
@@ -47,30 +76,36 @@ function MainLayout(props) {
               <div>View Profile</div>
             </div>
 
-            <div className="hidden sm:block">icon</div>
+            <div className="hidden sm:block">
+              <Icon.Detail size={15} />
+            </div>
           </div>
         </div>
       </aside>
 
-      <div className="bg-special-mainbg flex-1 flex flex-col">
-        <header className="flex justify-between items-center border-b border-gray-05 px-6 py-5">
+      <div className="bg-special-mainbg flex-1 flex flex-col overflow-hidden">
+        <header className="h-[70px] shrink-0 flex justify-between items-center border-b border-gray-05 px-6">
           <div className="flex items-center">
             <div className="font-bold text-xl me-6">
               Username
             </div>
 
-            <div className="text-gray-03 hidden">
-              May 19, 2023
+            <div className="text-gray-03 hidden sm:flex items-center gap-1 text-xs">
+              <Icon.ChevronRight size={20} />
+              <span>May 19, 2023</span>
             </div>
           </div>
 
-          <div className="flex items-center">
-            <div className="me-10">icon</div>
+          <div className="flex items-center gap-8">
+            <button className="flex items-center text-gray-01">
+              <NotificationsIcon sx={{ fontSize: 18 }} />
+            </button>
+
             <Input backgroundColor="bg-white" border="border-white" />
           </div>
         </header>
 
-        <main className="flex-1 px-6 py-4">
+        <main className="flex-1 h-full px-6 py-4 overflow-hidden">
           {children}
         </main>
       </div>
