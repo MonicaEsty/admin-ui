@@ -8,6 +8,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: "#299D91",
+
         "special-red2": "#b83016",
 
         "defaultblack": "#111827",
@@ -16,6 +18,8 @@ export default {
         "special-bg3": "#2A2D36",
 
         "special-green": "#299D91",
+        "special-bg": "#F3F4F6",
+        "gray-02": "#9CA3AF",
 
         "gray-01": "#6b7280",
         "gray-03": "#9ca3af",

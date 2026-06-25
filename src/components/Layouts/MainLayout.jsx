@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -7,6 +7,16 @@ import { NavLink } from "react-router-dom";
 
 function MainLayout(props) {
   const { children } = props;
+
+  const themes = [
+    { name: "theme-green", color: "#299D91" },
+    { name: "theme-blue", color: "#1E90FF" },
+    { name: "theme-purple", color: "#6A5ACD" },
+    { name: "theme-pink", color: "#DB7093" },
+    { name: "theme-brown", color: "#8B4513" },
+  ];
+
+  const [theme, setTheme] = useState(themes[0]);
 
   const menu = [
     { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
@@ -33,7 +43,7 @@ function MainLayout(props) {
                 to={item.link}
                 end={item.link === "/"}
                 style={({ isActive }) => ({
-                  backgroundColor: isActive ? "#299D91" : "transparent",
+                  backgroundColor: isActive ? theme.color : "transparent",
                 })}
                 className={({ isActive }) =>
                   `flex items-center w-full px-4 py-3 mb-1 rounded-md text-sm transition-all duration-200 ${
@@ -56,8 +66,27 @@ function MainLayout(props) {
         </div>
 
         <div>
+          <div className="text-sm mb-3 hidden sm:block">Themes</div>
+
+          <div className="flex flex-col sm:flex-row gap-2 items-center mb-6">
+            {themes.map((item) => (
+              <button
+                key={item.name}
+                type="button"
+                onClick={() => setTheme(item)}
+                className="w-6 h-6 rounded-md cursor-pointer border border-white"
+                style={{ backgroundColor: item.color }}
+              ></button>
+            ))}
+          </div>
+        </div>
+
+        <div>
           <div className="flex items-center bg-special-bg3 text-white px-4 py-3 rounded-md text-sm">
-            <div className="mx-auto sm:mx-0 flex items-center">
+            <div
+              className="mx-auto sm:mx-0 flex items-center"
+              style={{ color: theme.color }}
+            >
               <Icon.Logout />
             </div>
 
@@ -97,7 +126,11 @@ function MainLayout(props) {
           </div>
 
           <div className="flex items-center gap-8">
-            <button className="flex items-center text-gray-01">
+            <button
+              type="button"
+              className="flex items-center"
+              style={{ color: theme.color }}
+            >
               <NotificationsIcon sx={{ fontSize: 18 }} />
             </button>
 
@@ -105,7 +138,7 @@ function MainLayout(props) {
           </div>
         </header>
 
-        <main className="flex-1 h-full px-6 py-4 overflow-hidden">
+        <main className="flex-1 h-full px-6 py-4 overflow-y-auto">
           {children}
         </main>
       </div>

@@ -27,6 +27,7 @@ const myRouter = createBrowserRouter([
     path: "/balance",
     element: <BalancePage />,
   }
+
 ]);
 
 function App() {
