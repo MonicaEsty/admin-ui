@@ -1,6 +1,6 @@
 import React from "react";
 
-function Card({ title, desc, link = false }) {
+function Card({ title, desc, link = false, contentClassName = "px-6 py-4" }) {
   return (
     <div className="h-full flex flex-col">
       <div className="flex justify-between items-center mb-2">
@@ -18,10 +18,10 @@ function Card({ title, desc, link = false }) {
         )}
       </div>
 
-      <div className="flex-1 bg-white rounded-lg shadow-md px-6 py-4 overflow-hidden">
-        <p className="text-xs text-gray-800 leading-5">
-          {desc}
-        </p>
+      <div
+        className={`flex-1 bg-white rounded-lg shadow-md overflow-hidden ${contentClassName}`}
+      >
+        <div className="text-xs text-gray-800 leading-5">{desc}</div>
       </div>
     </div>
   );
