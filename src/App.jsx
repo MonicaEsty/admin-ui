@@ -13,12 +13,14 @@ const myRouter = createBrowserRouter([
     element: <DashboardPage />,
     errorElement: <Error />,
   },
-
+  {
+    path: "/login",
+    element: <SignInPage />,
+  },
   {
     path: "/sign-in",
     element: <SignInPage />,
   },
-
   {
     path: "/sign-up",
     element: <SignUpPage />,
@@ -26,8 +28,7 @@ const myRouter = createBrowserRouter([
   {
     path: "/balance",
     element: <BalancePage />,
-  }
-
+  },
 ]);
 
 function App() {

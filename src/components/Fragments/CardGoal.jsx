@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "../Elements/Card";
 import Icon from "../Elements/Icon";
+import { ThemeContext } from "../../context/themeContext";
 
 function CardGoal(props) {
   const { data = {} } = props;
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Card
@@ -75,7 +77,7 @@ function CardGoal(props) {
                 <path
                   d="M 18 58 A 42 42 0 0 1 82 19"
                   fill="none"
-                  stroke="#299D91"
+                  stroke={theme.color}
                   strokeWidth="12"
                 />
 
@@ -84,12 +86,12 @@ function CardGoal(props) {
                   y1="58"
                   x2="82"
                   y2="20"
-                  stroke="#299D91"
+                  stroke={theme.color}
                   strokeWidth="4"
                   strokeLinecap="round"
                 />
 
-                <circle cx="60" cy="58" r="6" fill="#299D91" />
+                <circle cx="60" cy="58" r="6" fill={theme.color} />
               </svg>
 
               <div className="w-full flex justify-between -mt-1">

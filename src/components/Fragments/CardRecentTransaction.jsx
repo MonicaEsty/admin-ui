@@ -37,7 +37,7 @@ function CardRecentTransaction(props) {
               onClick={() => setActive(tab)}
               className={
                 active === tab
-                  ? "pb-2 text-sm font-bold text-[#299D91] border-b-4 border-[#299D91]"
+                  ? "pb-2 text-sm font-bold text-primary border-b-4 border-primary"
                   : "pb-2 text-sm font-bold text-gray-400 border-b-4 border-transparent"
               }
             >
@@ -48,10 +48,7 @@ function CardRecentTransaction(props) {
 
         <div className="h-[calc(100%-52px)] flex flex-col justify-between">
           {filteredData.map((item) => (
-            <div
-              key={item.id}
-              className="flex justify-between items-center"
-            >
+            <div key={item.id} className="flex justify-between items-center">
               <div className="flex items-center min-w-0">
                 <div className="w-11 h-11 bg-[#F5F5F5] rounded-lg flex items-center justify-center shrink-0">
                   {React.cloneElement(item.icon, {
