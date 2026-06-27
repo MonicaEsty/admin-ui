@@ -23,6 +23,7 @@ function GaugePointer(props) {
   return (
     <g>
       <circle cx={cx} cy={cy} r={5} fill={color} />
+
       <path
         d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
         stroke={color}
@@ -34,8 +35,10 @@ function GaugePointer(props) {
 }
 
 export default function CompositionExample(props) {
-  const { data } = props;
+  const { data = 0 } = props;
   const { theme } = React.useContext(ThemeContext);
+
+  const value = Number.isNaN(Number(data)) ? 0 : Number(data);
 
   return (
     <GaugeContainer
@@ -43,8 +46,11 @@ export default function CompositionExample(props) {
       height={80}
       startAngle={-90}
       endAngle={90}
-      value={data}
+      value={value}
       sx={{
+        "& .MuiGauge-referenceArc": {
+          fill: "#E5E7EB",
+        },
         "& .value-arc": {
           fill: theme.color,
         },

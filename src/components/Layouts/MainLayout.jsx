@@ -3,12 +3,29 @@ import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Icon from "../Elements/Icon";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/themeContext";
+import { AuthContext } from "../../context/authContext";
+import { logoutService } from "../../services/authService";
 
 function MainLayout(props) {
   const { children } = props;
+
   const { themes, theme, setTheme } = useContext(ThemeContext);
+  const { user, logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    try {
+      await logoutService();
+      logout();
+    } catch (err) {
+      console.error(err);
+
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
 
   const menu = [
     { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
@@ -74,16 +91,15 @@ function MainLayout(props) {
         </div>
 
         <div>
-          <Link
-            to="/login"
-            className="flex items-center bg-special-bg3 text-white px-4 py-3 rounded-md text-sm"
-          >
-            <div className="mx-auto sm:mx-0 flex items-center text-primary">
-              <Icon.Logout />
-            </div>
+          <div onClick={handleLogout} className="cursor-pointer">
+            <div className="flex items-center bg-special-bg3 text-white px-4 py-3 rounded-md text-sm">
+              <div className="mx-auto sm:mx-0 flex items-center text-primary">
+                <Icon.Logout />
+              </div>
 
-            <div className="ms-3 hidden sm:block">Logout</div>
-          </Link>
+              <div className="ms-3 hidden sm:block">Logout</div>
+            </div>
+          </div>
 
           <div className="border-b my-8 border-white"></div>
 
@@ -91,7 +107,7 @@ function MainLayout(props) {
             <div>Avatar</div>
 
             <div className="hidden sm:block text-center">
-              <div>Username</div>
+              <div>{user?.name}</div>
               <div>View Profile</div>
             </div>
 
@@ -105,7 +121,7 @@ function MainLayout(props) {
       <div className="bg-special-mainbg flex-1 flex flex-col overflow-hidden">
         <header className="h-[70px] shrink-0 flex justify-between items-center border-b border-gray-05 px-6">
           <div className="flex items-center">
-            <div className="font-bold text-xl me-6">Username</div>
+            <div className="font-bold text-xl me-6">{user?.name}</div>
 
             <div className="text-gray-03 hidden sm:flex items-center gap-1 text-xs">
               <Icon.ChevronRight size={20} />

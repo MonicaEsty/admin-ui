@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MainLayout from "../components/Layouts/MainLayout.jsx";
 
 import CardBalance from "../components/Fragments/CardBalance.jsx";
@@ -13,11 +13,35 @@ import {
   bills,
   expensesBreakdowns,
   balances,
-  goals,
   expensesStatistics,
 } from "../data.jsx";
 
+import { goalService } from "../services/dataService.jsx";
+import { AuthContext } from "../context/authContext.jsx";
+
 function Dashboard() {
+  const [goals, setGoals] = useState({});
+  const { logout } = useContext(AuthContext);
+
+  const fetchGoals = async () => {
+    try {
+      const data = await goalService();
+      setGoals(data);
+    } catch (err) {
+      console.error("Gagal mengambil data goals:", err);
+
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+  }, []);
+
+  console.log(goals);
+
   return (
     <MainLayout>
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-6">

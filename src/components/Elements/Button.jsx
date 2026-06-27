@@ -3,12 +3,12 @@ import React from "react";
 function Button(props) {
   const {
     children,
-    type = "submit",
+    type = "button",
     variant = "primary",
+    ...rest
   } = props;
 
-  const baseClasses =
-    "h-12 rounded-md text-sm w-full";
+  const baseClasses = "h-12 rounded-md text-sm w-full";
 
   const variantClasses = {
     primary: "bg-primary text-white",
@@ -16,19 +16,17 @@ function Button(props) {
   };
 
   const finalClasses = `${baseClasses} ${
-    variantClasses[variant] ||
-    variantClasses.primary
+    variantClasses[variant] || variantClasses.primary
   }`;
 
   return (
-    <>
-      <button
-        className={finalClasses}
-        type={type}
-      >
-        {children}
-      </button>
-    </>
+    <button
+      type={type}
+      className={finalClasses}
+      {...rest}
+    >
+      {children}
+    </button>
   );
 }
 
